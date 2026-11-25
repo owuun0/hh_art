@@ -54,6 +54,15 @@ body.locked .wrap{display:none}
 #gate input{width:100%;font:inherit;padding:14px;border-radius:12px;border:1px solid var(--line);text-align:center;font-size:1.1rem;margin-bottom:10px;min-height:52px}
 #gate button{width:100%;font:inherit;font-size:1.05rem;padding:14px;border:0;border-radius:999px;background:var(--blue);color:#fff;min-height:52px;cursor:pointer}
 #gate .err{color:#d6455d;min-height:1.6em;margin:8px 0 0;font-size:.95rem}
+.acard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:12px}
+.acard .top{display:flex;justify-content:space-between;align-items:center}
+.acard input,.acard textarea,details.adm input,.row input{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin:4px 0 8px;min-height:44px;background:#fff;color:var(--ink)}
+.acard label,details.adm label{display:block;font-size:.88rem;color:var(--sub)}
+details.adm{background:var(--blue-bg);border-radius:var(--r);padding:12px 14px;margin-bottom:14px}
+details.adm summary{cursor:pointer;min-height:32px}
+.del{border:0;background:none;color:#d6455d;font:inherit;min-height:44px;cursor:pointer}
+.save{width:100%;font:inherit;font-size:1.05rem;padding:14px;border:0;border-radius:999px;background:var(--blue);color:#fff;min-height:52px;cursor:pointer;margin-top:8px}
+.msg{min-height:1.6em;text-align:center;color:var(--sub)}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 </style>
 </head>
@@ -79,6 +88,7 @@ body.locked .wrap{display:none}
     <a href="#students" id="t-students">학생별 모아보기</a>
   </nav>
   <main id="app"></main>
+  <footer style="text-align:center;padding:24px 0"><a href="#admin" style="color:var(--sub);font-size:.85rem">관리자</a></footer>
 </div>
 <div id="lb" role="dialog" aria-label="사진 크게 보기"><button aria-label="닫기">✕</button><img alt=""></div>
 
@@ -287,9 +297,22 @@ function img(p, i, cls) {
   return '<img ' + (cls ? 'class="' + cls + '" ' : '') + 'src="' + esc(fix(p, i)) + '" alt="수업 사진" loading="lazy" referrerpolicy="no-referrer" data-i="' + i + '">';
 }
 
-const months = [...new Set(CLASSES.map(c => c.date.slice(0, 7)))];
+let months = [...new Set(CLASSES.map(c => c.date.slice(0, 7)))];
 const nowKey = new Date().toISOString().slice(0, 7);
 const st = { month: months.includes(nowKey) ? nowKey : months[months.length - 1], student: STUDENTS[0], cf: 'all', mode: 'week', period: null };
+
+function reload(arr) {
+  CLASSES.splice(0, CLASSES.length, ...arr.map(c => {
+    const ph2 = {}; STUDENTS.forEach(n => ph2[n] = (c.photos && c.photos[n]) || []);
+    return { date: c.date, title: c.title || '', desc: c.desc || '', photos: ph2 };
+  }));
+  CLASSES.sort((a, b) => a.date.localeCompare(b.date));
+  months = [...new Set(CLASSES.map(c => c.date.slice(0, 7)))];
+  if (!months.includes(st.month)) st.month = months[months.length - 1];
+}
+async function load() {
+  try { const r = await fetch('data.json?t=' + Date.now()); if (r.ok) { const j = await r.json(); if (Array.isArray(j.classes) && j.classes.length) reload(j.classes); } } catch (e) {}
+}
 
 function home() {
   const list = CLASSES.filter(c => c.date.startsWith(st.month));
@@ -341,11 +364,71 @@ function students() {
   $('#pSel').onchange = e => { st.period = e.target.value; students(); };
 }
 
+/* ---------- 관리자 ---------- */
+let dirty = false;
+const GH = () => { try { return JSON.parse(localStorage.getItem('art-gh') || '{}'); } catch (e) { return {}; } };
+function admin() {
+  const g = GH();
+  const list = CLASSES.filter(c => c.date.startsWith(st.month));
+  app.innerHTML = '<h2>관리자</h2><p class="meta">주제와 사진 링크를 고친 뒤 맨 아래 <b>저장하기</b>를 눌러야 사이트에 반영돼요.</p>' +
+    '<details class="adm"' + (g.token ? '' : ' open') + '><summary>저장 연결 설정 (처음 한 번)</summary>' +
+    '<label>GitHub 아이디<input id="gOwner" value="' + esc(g.owner || '') + '" autocapitalize="off"></label>' +
+    '<label>저장소 이름<input id="gRepo" value="' + esc(g.repo || '') + '" autocapitalize="off"></label>' +
+    '<label>토큰<input id="gTok" type="password" value="' + esc(g.token || '') + '"></label></details>' +
+    '<div class="row"><select id="mSel" aria-label="월 선택">' + months.map(m => '<option value="' + m + '"' + (m === st.month ? ' selected' : '') + '>' + mLabel(m) + '</option>').join('') + '</select></div>' +
+    list.map(c => '<div class="acard"><div class="top"><b>' + dLabel(c.date) + '</b><button class="del" data-del="' + c.date + '">삭제</button></div>' +
+      '<input data-d="' + c.date + '" data-k="title" placeholder="주제 이름" value="' + esc(c.title) + '">' +
+      '<input data-d="' + c.date + '" data-k="desc" placeholder="설명 (선택)" value="' + esc(c.desc) + '">' +
+      STUDENTS.map(n => '<label>' + esc(n) + ' 사진 링크 (한 줄에 하나)<textarea rows="3" data-d="' + c.date + '" data-s="' + esc(n) + '" placeholder="구글드라이브 또는 이미지 링크">' + esc((c.photos[n] || []).join('\n')) + '</textarea></label>').join('') + '</div>').join('') +
+    '<div class="row"><input type="date" id="newD" aria-label="추가할 날짜"><button class="chip" id="addB" style="white-space:nowrap">수업 추가</button></div>' +
+    '<button class="save" id="saveB">저장하기</button><p class="msg" id="msg" role="status"></p>';
+  $('#mSel').onchange = e => { st.month = e.target.value; admin(); };
+  app.querySelectorAll('[data-del]').forEach(b => b.onclick = () => {
+    if (!confirm(dLabel(b.dataset.del) + ' 수업을 삭제할까요?')) return;
+    CLASSES.splice(CLASSES.findIndex(c => c.date === b.dataset.del), 1); dirty = true; reload(CLASSES.slice()); admin();
+  });
+  $('#addB').onclick = () => {
+    const d = $('#newD').value;
+    if (!d || CLASSES.some(c => c.date === d)) { $('#msg').textContent = d ? '이미 있는 날짜예요.' : '추가할 날짜를 골라 주세요.'; return; }
+    if (dow(d) !== '목' && !confirm('목요일이 아니에요. 그래도 추가할까요?')) return;
+    const ph2 = {}; STUDENTS.forEach(n => ph2[n] = []);
+    reload(CLASSES.concat([{ date: d, title: '', desc: '', photos: ph2 }])); st.month = d.slice(0, 7); dirty = true; admin();
+  };
+  $('#saveB').onclick = save;
+}
+app.oninput = e => {
+  const t = e.target, d = t.dataset.d; if (!d) return;
+  const c = CLASSES.find(x => x.date === d); if (!c) return;
+  if (t.dataset.k) c[t.dataset.k] = t.value;
+  else if (t.dataset.s) c.photos[t.dataset.s] = t.value.split('\n').map(x => x.trim()).filter(Boolean);
+  dirty = true;
+};
+async function save() {
+  const o = $('#gOwner').value.trim(), r = $('#gRepo').value.trim(), tk = $('#gTok').value.trim(), msg = $('#msg');
+  if (!o || !r || !tk) { msg.textContent = '위쪽 "저장 연결 설정"에 아이디, 저장소 이름, 토큰을 입력해 주세요.'; $('details.adm').open = true; return; }
+  try { localStorage.setItem('art-gh', JSON.stringify({ owner: o, repo: r, token: tk })); } catch (e) {}
+  const api = 'https://api.github.com/repos/' + o + '/' + r + '/contents/data.json';
+  const h = { Authorization: 'Bearer ' + tk, Accept: 'application/vnd.github+json' };
+  msg.textContent = '저장 중…';
+  try {
+    let sha; const g = await fetch(api, { headers: h });
+    if (g.ok) sha = (await g.json()).sha; else if (g.status !== 404) throw g.status;
+    const body = { message: '수업 정보 수정', content: btoa(unescape(encodeURIComponent(JSON.stringify({ classes: CLASSES }, null, 1)))) };
+    if (sha) body.sha = sha;
+    const p = await fetch(api, { method: 'PUT', headers: h, body: JSON.stringify(body) });
+    if (!p.ok) throw p.status;
+    dirty = false; msg.textContent = '저장됐어요. 1~2분 뒤 사이트에 반영돼요.';
+  } catch (c) {
+    msg.textContent = c === 401 ? '토큰이 맞지 않거나 만료됐어요.' : c === 404 ? '아이디 또는 저장소 이름을 확인해 주세요.' : c === 403 ? '토큰 권한(Contents: Read and write)을 확인해 주세요.' : '저장하지 못했어요. 인터넷 연결을 확인해 주세요. (' + c + ')';
+  }
+}
+window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
 function route() {
   const h = location.hash.slice(1) || 'home';
-  $('#t-home').classList.toggle('on', h !== 'students');
+  $('#t-home').classList.toggle('on', h !== 'students' && h !== 'admin');
   $('#t-students').classList.toggle('on', h === 'students');
-  if (h.startsWith('c-')) cls(h.slice(2)); else if (h === 'students') students(); else home();
+  if (h.startsWith('c-')) cls(h.slice(2)); else if (h === 'students') students(); else if (h === 'admin') admin(); else home();
   window.scrollTo(0, 0);
 }
 
@@ -367,10 +450,11 @@ async function sha(t) {
   const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('art-class:' + t));
   return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
 }
-function unlock() {
+async function unlock() {
   document.body.classList.remove('locked');
   $('#gate').hidden = true;
   window.addEventListener('hashchange', route);
+  await load();
   route();
 }
 $('#gName').textContent = SITE.name;
