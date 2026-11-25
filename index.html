@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="robots" content="noindex,nofollow">
+<title>우리 미술 교실</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fffdf8;--card:#fff;--ink:#2b3445;--sub:#6f7a8c;--line:#e8ecf2;--blue:#4aa3f0;--blue-bg:#e8f3fe;--sun:#ffd666;--mint:#bfeee0;--pink:#ffd3dc;--r:18px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Gowun Dodum','Apple SD Gothic Neo','Noto Sans KR',sans-serif;font-size:16px;line-height:1.6;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 40px}
+header{padding:28px 0 8px}
+header h1{margin:0;font-size:1.75rem;line-height:1.25}
+header p{margin:6px 0 0;color:var(--sub)}
+.dots{display:flex;gap:6px;margin-bottom:12px}.dots i{width:14px;height:14px;border-radius:50%}
+nav{position:sticky;top:0;z-index:5;background:rgba(255,253,248,.94);backdrop-filter:blur(8px);padding:10px 0;display:flex;gap:8px;border-bottom:1px solid var(--line);margin-bottom:16px}
+nav a{flex:1;text-align:center;padding:12px 0;border-radius:999px;text-decoration:none;color:var(--sub);background:#fff;border:1px solid var(--line);min-height:44px}
+nav a.on{background:var(--blue);border-color:var(--blue);color:#fff}
+select,.chip,.seg button{font:inherit;color:var(--ink)}
+select{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;min-height:48px}
+.row{display:flex;gap:8px;margin-bottom:14px}
+.card{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px;margin-bottom:12px;text-decoration:none;color:inherit;min-height:88px}
+.card:active{background:var(--blue-bg)}
+.date{flex:0 0 64px;height:64px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.8rem;color:var(--ink)}
+.date b{font-size:1.5rem;line-height:1.1}
+.card h3{margin:0;font-size:1.1rem}.card p{margin:2px 0 0;color:var(--sub);font-size:.9rem}
+.thumb{flex:0 0 64px;height:64px;border-radius:12px;object-fit:cover;background:var(--line)}
+.back{display:inline-block;margin:4px 0 12px;color:var(--blue);text-decoration:none;padding:10px 0;min-height:44px}
+h2{margin:0 0 4px;font-size:1.4rem}.meta{color:var(--sub);margin:0 0 16px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr)}}
+.grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px;display:block;background:var(--line)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;min-height:44px;cursor:pointer}
+.chip.on{background:var(--sun);border-color:var(--sun)}
+.seg{display:flex;background:var(--blue-bg);border-radius:999px;padding:4px;margin-bottom:12px}
+.seg button{flex:1;border:0;background:none;padding:10px;border-radius:999px;min-height:44px;cursor:pointer}
+.seg button.on{background:var(--blue);color:#fff}
+.group{margin:20px 0 8px;font-size:1rem;color:var(--sub)}
+.empty{padding:32px 16px;text-align:center;color:var(--sub);background:#fff;border:1px dashed var(--line);border-radius:var(--r)}
+#lb{position:fixed;inset:0;background:rgba(20,26,38,.92);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+#lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:12px}
+#lb button{position:absolute;top:calc(12px + env(safe-area-inset-top));right:14px;width:48px;height:48px;border-radius:50%;border:0;font-size:1.4rem;background:#fff}
+body.locked .wrap{display:none}
+#gate{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+#gate[hidden]{display:none}
+#gate form{width:100%;max-width:340px;text-align:center}
+#gate h1{font-size:1.5rem;margin:12px 0 4px}#gate p{color:var(--sub);margin:0 0 18px}
+#gate input{width:100%;font:inherit;padding:14px;border-radius:12px;border:1px solid var(--line);text-align:center;font-size:1.1rem;margin-bottom:10px;min-height:52px}
+#gate button{width:100%;font:inherit;font-size:1.05rem;padding:14px;border:0;border-radius:999px;background:var(--blue);color:#fff;min-height:52px;cursor:pointer}
+#gate .err{color:#d6455d;min-height:1.6em;margin:8px 0 0;font-size:.95rem}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+</style>
+</head>
+<body class="locked">
+<div id="gate">
+  <form id="gForm" autocomplete="off">
+    <div class="dots" style="justify-content:center"><i style="background:var(--blue)"></i><i style="background:var(--sun)"></i><i style="background:#8fdcc4"></i><i style="background:#ffa9b9"></i></div>
+    <h1 id="gName">우리 미술 교실</h1>
+    <p>입장 코드를 입력해 주세요.</p>
+    <input id="gIn" type="password" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="입장 코드" aria-label="입장 코드" required>
+    <button type="submit">입장하기</button>
+    <p class="err" id="gErr" role="alert"></p>
+  </form>
+</div>
+<div class="wrap">
+  <header>
+    <div class="dots"><i style="background:var(--blue)"></i><i style="background:var(--sun)"></i><i style="background:#8fdcc4"></i><i style="background:#ffa9b9"></i></div>
+    <h1 id="siteName"></h1>
+    <p id="siteSub"></p>
+  </header>
+  <nav>
+    <a href="#home" id="t-home">수업 일정</a>
+    <a href="#students" id="t-students">학생별 모아보기</a>
+  </nav>
+  <main id="app"></main>
+</div>
+<div id="lb" role="dialog" aria-label="사진 크게 보기"><button aria-label="닫기">✕</button><img alt=""></div>
+
+<script>
+/* =====================================================================
+   여기만 수정하면 됩니다. (수업 / 사진 링크)
+   - 사진은 학생별(선하, 윤하)로 따로 넣어요. 구글드라이브 공유 링크("링크가 있는 모든 사용자" 공개)나
+     이미지 주소(https://...jpg)를 그대로 붙여넣으세요. 빈 따옴표('')는 임시 색 타일이에요.
+   - 날짜는 'YYYY-MM-DD' 형식(목요일).
+   ===================================================================== */
+const SITE = { name: '우리 미술 교실', sub: '매주 목요일, 함께 그리는 시간' };
+const STUDENTS = ['선하', '윤하'];
+const CLASSES = [
+  { date: '2026-11-05', title: '가을 나뭇잎 콜라주', desc: '주운 낙엽을 오려 붙여 나만의 나무를 만들어요.',
+    photos: { '선하': ['', ''], '윤하': [''] } },
+  { date: '2026-11-12', title: '수채화 번지기', desc: '물감이 번지는 느낌으로 노을을 그려요.',
+    photos: { '선하': [''], '윤하': ['', ''] } },
+  { date: '2026-11-19', title: '점토로 만든 동물 친구', desc: '말랑한 점토로 좋아하는 동물을 빚어요.',
+    photos: { '선하': [''], '윤하': [''] } },
+  { date: '2026-11-26', title: '크레파스 겨울 풍경', desc: '눈 내린 마을을 크레파스로 표현해요.',
+    photos: { '선하': [''], '윤하': [''] } },
+  { date: '2026-12-03', title: '크리스마스 트리 만들기', desc: '색종이와 반짝이로 트리를 꾸며요.',
+    photos: {
+      /* 예시: '선하': ['https://drive.google.com/file/d/파일ID/view?usp=sharing', 'https://사이트/사진.jpg'], */
+      '선하': ['', ''],
+      '윤하': ['', '']
+    } },
+  { date: '2026-12-10', title: '눈사람 입체 카드', desc: '팝업 카드로 움직이는 눈사람을 만들어요.', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-12-17', title: '별빛 밤하늘 그리기', desc: '어두운 도화지에 파스텔로 별을 그려요.', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-12-24', title: '내가 만든 선물 포장', desc: '포장지를 직접 디자인해요.', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-12-31', title: '올해의 그림 전시회', desc: '한 해 동안 그린 작품을 모아 전시해요.', photos: { '선하': [], '윤하': [] } }
+];
+/* ===================================================================== */
+
+const COLORS = ['#e8f3fe', '#fff0c2', '#d9f6ec', '#ffe3e8'];
+const $ = s => document.querySelector(s);
+const app = $('#app');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const WD = ['일','월','화','수','목','금','토'];
+const parts = d => d.split('-').map(Number);
+const dow = d => { const [y,m,dd] = parts(d); return WD[new Date(y, m-1, dd).getDay()]; };
+const mLabel = k => { const [y,m] = parts(k); return y + '년 ' + m + '월'; };
+const dLabel = d => { const [y,m,dd] = parts(d); return m + '월 ' + dd + '일 (' + dow(d) + ')'; };
+
+CLASSES.sort((a,b) => a.date.localeCompare(b.date));
+
+function ph(i) {
+  const c = COLORS[i % 4], e = ['🎨','🖍️','✂️','🖌️'][i % 4];
+  return 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="' + c + '"/><text x="200" y="230" font-size="110" text-anchor="middle">' + e + '</text></svg>');
+}
+function fix(u, i) {
+  if (!u) return ph(i);
+  const m = u.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || u.match(/drive\.google\.com\/(?:open|uc)\?(?:[^#]*&)?id=([\w-]+)/);
+  return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1200' : u;
+}
+function img(p, i, cls) {
+  return '<img ' + (cls ? 'class="' + cls + '" ' : '') + 'src="' + esc(fix(p, i)) + '" alt="수업 사진" loading="lazy" referrerpolicy="no-referrer" data-i="' + i + '">';
+}
+
+const months = [...new Set(CLASSES.map(c => c.date.slice(0, 7)))];
+const nowKey = new Date().toISOString().slice(0, 7);
+const st = { month: months.includes(nowKey) ? nowKey : months[months.length - 1], student: STUDENTS[0], cf: 'all', mode: 'week', period: null };
+
+function home() {
+  const list = CLASSES.filter(c => c.date.startsWith(st.month));
+  const all = c => STUDENTS.flatMap(n => c.photos[n] || []);
+  app.innerHTML =
+    '<div class="row"><select id="mSel" aria-label="월 선택">' + months.map(m => '<option value="' + m + '"' + (m === st.month ? ' selected' : '') + '>' + mLabel(m) + ' 수업</option>').join('') + '</select></div>' +
+    list.map((c, i) =>
+      '<a class="card" href="#c-' + c.date + '">' +
+      '<div class="date" style="background:' + COLORS[i % 4] + '"><b>' + parts(c.date)[2] + '</b>' + dow(c.date) + '</div>' +
+      '<div style="flex:1;min-width:0"><h3>' + esc(c.title) + '</h3><p>' + esc(c.desc) + '</p><p>사진 ' + all(c).length + '장</p></div>' +
+      (all(c).length ? img(all(c)[0], i, 'thumb') : '') + '</a>').join('');
+  $('#mSel').onchange = e => { st.month = e.target.value; home(); };
+}
+
+function cls(date) {
+  const c = CLASSES.find(x => x.date === date);
+  if (!c) return home();
+  const names = st.cf === 'all' ? STUDENTS : [st.cf];
+  app.innerHTML = '<a class="back" href="#home">← 수업 일정으로</a><h2>' + esc(c.title) + '</h2><p class="meta">' + dLabel(c.date) + ' · ' + esc(c.desc) + '</p>' +
+    '<div class="chips">' + [['all', '전체 보기']].concat(STUDENTS.map(n => [n, n])).map(x => '<button class="chip' + (st.cf === x[0] ? ' on' : '') + '" data-f="' + esc(x[0]) + '">' + esc(x[1]) + '</button>').join('') + '</div>' +
+    names.map(n => { const ps = c.photos[n] || [];
+      return '<div class="group"><b>' + esc(n) + '</b> · 사진 ' + ps.length + '장</div>' +
+        (ps.length ? '<div class="grid">' + ps.map((p, i) => img(p, i)).join('') + '</div>' : '<div class="empty">아직 올라온 사진이 없어요.</div>'); }).join('');
+  app.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { st.cf = b.dataset.f; cls(date); });
+}
+
+function periodsFor(mode) {
+  const f = { week: c => c.date, month: c => c.date.slice(0, 7), year: c => c.date.slice(0, 4) }[mode];
+  return [...new Set(CLASSES.map(f))];
+}
+function periodLabel(mode, k) { return mode === 'week' ? dLabel(k) + ' 수업' : mode === 'month' ? mLabel(k) : k + '년'; }
+function inPeriod(c) { return st.mode === 'week' ? c.date === st.period : c.date.startsWith(st.period); }
+
+function students() {
+  const opts = periodsFor(st.mode);
+  if (!opts.includes(st.period)) st.period = opts[opts.length - 1];
+  const groups = CLASSES.filter(inPeriod).map(c => ({ c, ps: c.photos[st.student] || [] })).filter(g => g.ps.length);
+  const total = groups.reduce((n, g) => n + g.ps.length, 0);
+  app.innerHTML =
+    '<div class="chips">' + STUDENTS.map(s => '<button class="chip' + (s === st.student ? ' on' : '') + '" data-s="' + esc(s) + '">' + esc(s) + '</button>').join('') + '</div>' +
+    '<div class="seg">' + [['week','주'],['month','월'],['year','1년']].map(m => '<button class="' + (st.mode === m[0] ? 'on' : '') + '" data-m="' + m[0] + '">' + m[1] + '</button>').join('') + '</div>' +
+    '<div class="row"><select id="pSel" aria-label="기간 선택">' + opts.map(k => '<option value="' + k + '"' + (k === st.period ? ' selected' : '') + '>' + periodLabel(st.mode, k) + '</option>').join('') + '</select></div>' +
+    (total ? '<p class="meta">' + esc(st.student) + ' 사진 ' + total + '장</p>' + groups.map(g =>
+      '<div class="group">' + dLabel(g.c.date) + ' · ' + esc(g.c.title) + '</div><div class="grid">' + g.ps.map((p, i) => img(p, i)).join('') + '</div>').join('')
+      : '<div class="empty">이 기간에 ' + esc(st.student) + '의 사진이 없어요.</div>');
+  app.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { st.student = b.dataset.s; students(); });
+  app.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { st.mode = b.dataset.m; st.period = null; students(); });
+  $('#pSel').onchange = e => { st.period = e.target.value; students(); };
+}
+
+function route() {
+  const h = location.hash.slice(1) || 'home';
+  $('#t-home').classList.toggle('on', h !== 'students');
+  $('#t-students').classList.toggle('on', h === 'students');
+  if (h.startsWith('c-')) cls(h.slice(2)); else if (h === 'students') students(); else home();
+  window.scrollTo(0, 0);
+}
+
+app.addEventListener('click', e => {
+  const t = e.target;
+  if (t.tagName === 'IMG' && t.closest('.grid')) { $('#lb img').src = t.src; $('#lb').classList.add('on'); }
+});
+app.addEventListener('error', e => { if (e.target.tagName === 'IMG' && !e.target.dataset.bad) { e.target.dataset.bad = 1; e.target.src = ph(+e.target.dataset.i || 0); } }, true);
+$('#lb').onclick = () => $('#lb').classList.remove('on');
+document.addEventListener('keydown', e => { if (e.key === 'Escape') $('#lb').classList.remove('on'); });
+
+document.title = SITE.name;
+$('#siteName').textContent = SITE.name;
+$('#siteSub').textContent = SITE.sub;
+
+/* 입장 코드: 코드 자체는 파일에 적지 않고 암호화된 값(HASH)만 저장해요. 코드를 바꾸려면 안내를 요청하세요. */
+const HASH = 'fcddf20ded2de320cdafde43bf86da8a4f114f6258a3510832379d45514f0fd5';
+async function sha(t) {
+  const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('art-class:' + t));
+  return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+function unlock() {
+  document.body.classList.remove('locked');
+  $('#gate').hidden = true;
+  window.addEventListener('hashchange', route);
+  route();
+}
+$('#gName').textContent = SITE.name;
+let saved = '';
+try { saved = localStorage.getItem('art-ok') || ''; } catch (e) {}
+if (saved === HASH) unlock();
+$('#gForm').onsubmit = async e => {
+  e.preventDefault();
+  if (!window.crypto || !crypto.subtle) { $('#gErr').textContent = '보안 연결(https) 주소로 접속해 주세요.'; return; }
+  const h = await sha($('#gIn').value.trim());
+  if (h === HASH) { try { localStorage.setItem('art-ok', h); } catch (e) {} unlock(); }
+  else { $('#gErr').textContent = '코드가 맞지 않아요. 다시 확인해 주세요.'; $('#gIn').select(); }
+};
+</script>
+</body>
+</html>
