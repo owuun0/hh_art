@@ -92,6 +92,155 @@ body.locked .wrap{display:none}
 const SITE = { name: '우리 미술 교실', sub: '매주 목요일, 함께 그리는 시간' };
 const STUDENTS = ['선하', '윤하'];
 const CLASSES = [
+  /* 2024년 1월 ~ 2026년 10월: 매주 목요일. title(주제)과 photos(사진 링크)만 채우면 돼요. 수업이 없던 날은 그 줄을 지우세요. */
+  { date: '2024-01-04', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-01-11', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-01-18', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-01-25', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-02-01', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-02-08', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-02-15', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-02-22', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-02-29', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-03-07', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-03-14', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-03-21', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-03-28', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-04-04', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-04-11', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-04-18', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-04-25', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-05-02', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-05-09', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-05-16', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-05-23', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-05-30', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-06-06', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-06-13', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-06-20', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-06-27', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-07-04', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-07-11', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-07-18', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-07-25', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-08-01', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-08-08', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-08-15', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-08-22', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-08-29', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-09-05', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-09-12', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-09-19', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-09-26', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-10-03', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-10-10', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-10-17', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-10-24', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-10-31', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-11-07', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-11-14', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-11-21', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-11-28', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-12-05', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-12-12', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-12-19', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2024-12-26', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-01-02', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-01-09', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-01-16', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-01-23', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-01-30', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-02-06', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-02-13', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-02-20', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-02-27', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-03-06', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-03-13', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-03-20', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-03-27', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-04-03', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-04-10', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-04-17', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-04-24', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-05-01', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-05-08', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-05-15', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-05-22', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-05-29', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-06-05', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-06-12', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-06-19', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-06-26', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-07-03', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-07-10', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-07-17', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-07-24', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-07-31', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-08-07', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-08-14', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-08-21', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-08-28', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-09-04', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-09-11', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-09-18', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-09-25', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-10-02', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-10-09', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-10-16', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-10-23', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-10-30', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-11-06', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-11-13', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-11-20', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-11-27', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-12-04', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-12-11', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-12-18', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2025-12-25', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-01-01', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-01-08', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-01-15', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-01-22', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-01-29', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-02-05', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-02-12', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-02-19', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-02-26', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-03-05', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-03-12', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-03-19', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-03-26', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-04-02', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-04-09', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-04-16', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-04-23', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-04-30', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-05-07', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-05-14', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-05-21', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-05-28', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-06-04', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-06-11', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-06-18', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-06-25', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-07-02', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-07-09', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-07-16', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-07-23', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-07-30', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-08-06', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-08-13', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-08-20', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-08-27', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-09-03', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-09-10', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-09-17', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-09-24', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-10-01', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-10-08', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-10-15', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-10-22', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
+  { date: '2026-10-29', title: '', desc: '', photos: { '선하': [], '윤하': [] } },
   { date: '2026-11-05', title: '가을 나뭇잎 콜라주', desc: '주운 낙엽을 오려 붙여 나만의 나무를 만들어요.',
     photos: { '선하': ['', ''], '윤하': [''] } },
   { date: '2026-11-12', title: '수채화 번지기', desc: '물감이 번지는 느낌으로 노을을 그려요.',
@@ -150,7 +299,7 @@ function home() {
     list.map((c, i) =>
       '<a class="card" href="#c-' + c.date + '">' +
       '<div class="date" style="background:' + COLORS[i % 4] + '"><b>' + parts(c.date)[2] + '</b>' + dow(c.date) + '</div>' +
-      '<div style="flex:1;min-width:0"><h3>' + esc(c.title) + '</h3><p>' + esc(c.desc) + '</p><p>사진 ' + all(c).length + '장</p></div>' +
+      '<div style="flex:1;min-width:0"><h3>' + esc(c.title || '주제 준비 중') + '</h3><p>' + esc(c.desc) + '</p><p>사진 ' + all(c).length + '장</p></div>' +
       (all(c).length ? img(all(c)[0], i, 'thumb') : '') + '</a>').join('');
   $('#mSel').onchange = e => { st.month = e.target.value; home(); };
 }
@@ -159,7 +308,7 @@ function cls(date) {
   const c = CLASSES.find(x => x.date === date);
   if (!c) return home();
   const names = st.cf === 'all' ? STUDENTS : [st.cf];
-  app.innerHTML = '<a class="back" href="#home">← 수업 일정으로</a><h2>' + esc(c.title) + '</h2><p class="meta">' + dLabel(c.date) + ' · ' + esc(c.desc) + '</p>' +
+  app.innerHTML = '<a class="back" href="#home">← 수업 일정으로</a><h2>' + esc(c.title || '주제 준비 중') + '</h2><p class="meta">' + dLabel(c.date) + (c.desc ? ' · ' + esc(c.desc) : '') + '</p>' +
     '<div class="chips">' + [['all', '전체 보기']].concat(STUDENTS.map(n => [n, n])).map(x => '<button class="chip' + (st.cf === x[0] ? ' on' : '') + '" data-f="' + esc(x[0]) + '">' + esc(x[1]) + '</button>').join('') + '</div>' +
     names.map(n => { const ps = c.photos[n] || [];
       return '<div class="group"><b>' + esc(n) + '</b> · 사진 ' + ps.length + '장</div>' +
@@ -169,7 +318,8 @@ function cls(date) {
 
 function periodsFor(mode) {
   const f = { week: c => c.date, month: c => c.date.slice(0, 7), year: c => c.date.slice(0, 4) }[mode];
-  return [...new Set(CLASSES.map(f))];
+  const has = CLASSES.filter(c => (c.photos[st.student] || []).length);
+  return [...new Set((has.length ? has : CLASSES).map(f))];
 }
 function periodLabel(mode, k) { return mode === 'week' ? dLabel(k) + ' 수업' : mode === 'month' ? mLabel(k) : k + '년'; }
 function inPeriod(c) { return st.mode === 'week' ? c.date === st.period : c.date.startsWith(st.period); }
@@ -184,7 +334,7 @@ function students() {
     '<div class="seg">' + [['week','주'],['month','월'],['year','1년']].map(m => '<button class="' + (st.mode === m[0] ? 'on' : '') + '" data-m="' + m[0] + '">' + m[1] + '</button>').join('') + '</div>' +
     '<div class="row"><select id="pSel" aria-label="기간 선택">' + opts.map(k => '<option value="' + k + '"' + (k === st.period ? ' selected' : '') + '>' + periodLabel(st.mode, k) + '</option>').join('') + '</select></div>' +
     (total ? '<p class="meta">' + esc(st.student) + ' 사진 ' + total + '장</p>' + groups.map(g =>
-      '<div class="group">' + dLabel(g.c.date) + ' · ' + esc(g.c.title) + '</div><div class="grid">' + g.ps.map((p, i) => img(p, i)).join('') + '</div>').join('')
+      '<div class="group">' + dLabel(g.c.date) + ' · ' + esc(g.c.title || '주제 준비 중') + '</div><div class="grid">' + g.ps.map((p, i) => img(p, i)).join('') + '</div>').join('')
       : '<div class="empty">이 기간에 ' + esc(st.student) + '의 사진이 없어요.</div>');
   app.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { st.student = b.dataset.s; students(); });
   app.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { st.mode = b.dataset.m; st.period = null; students(); });
